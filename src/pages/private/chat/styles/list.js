@@ -4,5 +4,15 @@ export default makeStyles((theme) => ({
     position: "fixed",
     right: 15,
     bottom: 15
+  },
+
+  list:{
+    display:"flex",
+    flexFlow:"row nowrap"
+  },
+
+
+  hapus:{alignItems:"flex-end"
+
   }
 }));

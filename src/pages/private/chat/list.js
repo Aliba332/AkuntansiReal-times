@@ -9,6 +9,7 @@ import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import Divider from "@material-ui/core/Divider";
 import Badge from "@material-ui/core/Badge";
 import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
+import Hapus from "@material-ui/icons/HighlightOff";
 import useStyles from "./styles/list";
 import AppHeader from "../../../components/AppBar";
 import Container from "@material-ui/core/Container";
@@ -19,15 +20,17 @@ import Fab from "@material-ui/core/Fab";
 import ChatIcon from "@material-ui/icons/Chat";
 import AddDialog from "./add";
 import { useData } from "../../../components/DataProvider";
+import { firestore } from "../../../components/FirebaseProvider";
 
 export default function ChatList() {
   const history = useHistory();
   const classes = useStyles();
   const { chats } = useData();
   const { user } = useFirebase();
+  const [cht, setcht] = useState(false);
 
   const [chatDialog, setChatDialog] = useState({
-    open: false
+    open: false,
   });
 
   const handleOpenChatRoom = (chat) => (e) => {
@@ -46,30 +49,43 @@ export default function ChatList() {
             const profile = profileId ? chat.user_profiles[profileId] : {};
             return (
               <React.Fragment key={chat.id}>
-                <ListItem button onClick={handleOpenChatRoom(chat)}>
-                  <ListItemAvatar>
-                    <Avatar alt={profile.nama} src={profile.foto} />
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary={profile.nama}
-                    secondary={
-                      chat.is_typing && chat.is_typing[profile.id]
-                        ? "mengetik..."
-                        : chat.last_message.text ||
-                          "Belum ada pesan, kirim sekarang!"
-                    }
+                <div className={classes.list}>
+                  <ListItem button onClick={handleOpenChatRoom(chat)}>
+                    <ListItemAvatar>
+                      <Avatar alt={profile.nama} src={profile.foto} />
+                    </ListItemAvatar>
+                    <ListItemText
+                      primary={profile.nama}
+                      secondary={
+                        chat.is_typing && chat.is_typing[profile.id]
+                          ? "mengetik..."
+                          : chat.last_message.text ||
+                            "Belum ada pesan, kirim sekarang!"
+                      }
+                    />
+                    {chat.unread_count[user.uid] > 0 && (
+                      <ListItemSecondaryAction>
+                        <Badge
+                          color="primary"
+                          badgeContent={chat.unread_count[user.uid]}
+                        >
+                          <ChatBubbleOutlineIcon />
+                        </Badge>
+                      </ListItemSecondaryAction>
+                    )}
+                  </ListItem>
+                  <Hapus
+                    className={classes.hapus}
+                    onClick={async (e) => {
+                      e.preventDefault();
+                      setcht(true);
+                      await firestore.doc(`chats/${chat.id}`).delete();
+                      setcht(false);
+                    }}
+                    disabled={cht}
                   />
-                  {chat.unread_count[user.uid] > 0 && (
-                    <ListItemSecondaryAction>
-                      <Badge
-                        color="primary"
-                        badgeContent={chat.unread_count[user.uid]}
-                      >
-                        <ChatBubbleOutlineIcon />
-                      </Badge>
-                    </ListItemSecondaryAction>
-                  )}
-                </ListItem>
+                </div>
+
                 <Divider />
               </React.Fragment>
             );
