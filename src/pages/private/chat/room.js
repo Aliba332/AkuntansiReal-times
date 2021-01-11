@@ -18,7 +18,7 @@ import ChatBubbleOutlineIcon from "@material-ui/icons/ChatBubbleOutline";
 import {
   unixToTime,
   unixToIsoDate,
-  isoToRelative
+  isoToRelative,
 } from "../../../utils/datetime";
 
 import groupBy from "lodash/groupBy";
@@ -29,7 +29,7 @@ import { useData } from "../../../components/DataProvider";
 import {
   useFirebase,
   firestore,
-  FieldValue
+  FieldValue,
 } from "../../../components/FirebaseProvider";
 
 import MessageIn from "./message-in";
@@ -55,7 +55,6 @@ export default function Room({ message }) {
 
   const activeChatDocRef = firestore.doc(`chats/${params.chatId}`);
   const messagesColRef = activeChatDocRef.collection("messages");
-
   const [messages] = useCollectionData(
     messagesColRef.orderBy("created_at", "asc"),
     { idField: "id" }
@@ -66,7 +65,7 @@ export default function Room({ message }) {
       containerId: "chatWindow",
       offset: 0,
       isDynamic: true,
-      duration: 10
+      duration: 10,
     });
   }, [messages]);
 
@@ -101,20 +100,20 @@ export default function Room({ message }) {
             last_message: {
               from_user_id: user.uid,
               text: textRef.current.value,
-              created_ad: FieldValue.serverTimestamp()
+              created_ad: FieldValue.serverTimestamp(),
             },
 
             unread_count: {
               [user.uid]: 0,
-              [activeContact.id]: FieldValue.increment(1)
+              [activeContact.id]: FieldValue.increment(1),
             },
             user_profiles: {
               [user.uid]: profile,
-              [activeContact.id]: activeContact
-            }
+              [activeContact.id]: activeContact,
+            },
           },
           {
-            merge: true
+            merge: true,
           }
         );
 
@@ -123,7 +122,7 @@ export default function Room({ message }) {
           to_user_id: activeContact.id,
           text: textRef.current.value,
           created_at: FieldValue.serverTimestamp(),
-          is_read: false
+          is_read: false,
         });
 
         textRef.current.value = "";
@@ -134,15 +133,15 @@ export default function Room({ message }) {
       }
     }
   };
-  const isTyping = (is_typing) => async (e) => {
+  const isTyping = (is_typing) => async () => {
     await activeChatDocRef.set(
       {
         is_typing: {
-          [user.uid]: is_typing
-        }
+          [user.uid]: is_typing,
+        },
       },
       {
-        merge: true
+        merge: true,
       }
     );
   };
@@ -201,6 +200,7 @@ export default function Room({ message }) {
                     {isoToRelative(dateStr)}
                   </Typography>
                 </div>
+
                 {messagesGroupByDate[dateStr].map((message) => {
                   if (message.from_user_id !== user.uid) {
                     return <MessageIn key={message.id} message={message} />;
@@ -268,7 +268,7 @@ export default function Room({ message }) {
                 </IconButton>
                 <InputBase
                   inputProps={{
-                    ref: textRef
+                    ref: textRef,
                   }}
                   fullWidth
                   variant="outlined"

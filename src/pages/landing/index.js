@@ -1,20 +1,23 @@
-import React from "react";
-import { Link, Redirect } from "react-router-dom";
-
-import { useFirebase } from "../../components/FirebaseProvider";
+import React, { useState } from "react";
 
 import useStyles from "./styles";
 import { Button } from "@material-ui/core";
 
 import Logo from "../../image/logo.png";
+import Sebagai from "./sebagai";
+import { Link, Redirect } from "react-router-dom";
+import { useFirebase } from "../../components/FirebaseProvider";
 
 export default function Landing() {
   const classes = useStyles();
+  const {user} = useFirebase();
 
-  const { user } = useFirebase();
+  const [dialogDaftar, setDialogDaftar] = useState({
+    open: false,
+  });
 
   if (user) {
-    return <Redirect to="chat" />;
+    return <Redirect to="/submitmasuk" />;
   }
 
   return (
@@ -27,8 +30,11 @@ export default function Landing() {
           <Button
             className={classes.btnDaftar}
             variant="contained"
-            component={Link}
-            to="./registrasi"
+            onClick={() => {
+              setDialogDaftar({
+                open: true,
+              });
+            }}
           >
             Daftar
           </Button>
@@ -37,10 +43,19 @@ export default function Landing() {
             className={classes.btnLogin}
             variant="contained"
             component={Link}
-            to="./login"
+            to="/login"
           >
             Login
           </Button>
+          <Sebagai
+            {...dialogDaftar}
+            handleClose={() => {
+              setDialogDaftar((dialogDaftar) => ({
+                ...dialogDaftar,
+                open: false,
+              }));
+            }}
+          />
         </div>
       </div>
     </div>

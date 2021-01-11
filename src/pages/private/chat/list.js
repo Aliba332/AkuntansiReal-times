@@ -33,7 +33,7 @@ export default function ChatList() {
     open: false,
   });
 
-  const handleOpenChatRoom = (chat) => (e) => {
+  const handleOpenChatRoom = (chat) => () => {
     history.push(`chat/${chat.id}`);
   };
 

@@ -17,14 +17,18 @@ import useStyles from "./styles";
 import logo from "../../image/logo.png";
 
 import { auth, useFirebase } from "../../components/FirebaseProvider";
+import Sebagai from "../landing/sebagai";
 
-function Login(prop) {
+function Login() {
   const classes = useStyles();
 
   const [form, setForm] = useState({
     email: "",
     password: "",
-    showPassword: false
+    showPassword: false,
+  });
+  const [dialogDaftar, setDialogDaftar] = useState({
+    open: false,
   });
 
   const [isSubmitting, setSubmitting] = useState(false);
@@ -101,7 +105,7 @@ function Login(prop) {
   };
 
   if (user) {
-    return <Redirect to="/chat" />;
+    return <Redirect to="/submitmasuk" />;
   }
 
   return (
@@ -135,11 +139,11 @@ function Login(prop) {
                     <InputAdornment position="end">
                       <AccountCircle color="primary" />
                     </InputAdornment>
-                  )
+                  ),
                 }}
               />
               <TextField
-                id="standard-adornment-password"
+                id="password"
                 name="password"
                 label="Password"
                 margin="normal"
@@ -152,6 +156,7 @@ function Login(prop) {
                 error={error.password ? true : false}
                 helperText={error.password}
                 disabled={isSubmitting}
+                autoComplete="on"
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">
@@ -165,7 +170,7 @@ function Login(prop) {
                         {form.showPassword ? <Visibility /> : <VisibilityOff />}
                       </IconButton>
                     </InputAdornment>
-                  )
+                  ),
                 }}
               />
               <Grid container className={classes.buttons}>
@@ -181,11 +186,14 @@ function Login(prop) {
                 </Grid>
                 <Grid item>
                   <Button
-                    component={Link}
                     variant="contained"
                     color="secondary"
                     size="large"
-                    to="./registrasi"
+                    onClick={() => {
+                      setDialogDaftar({
+                        open: true,
+                      });
+                    }}
                   >
                     Daftar
                   </Button>
@@ -195,7 +203,7 @@ function Login(prop) {
                 <Typography
                   className={classes.lupaLink}
                   component={Link}
-                  to="/lupa-password"
+                  to="./lupa-password"
                 >
                   Lupa Password?
                 </Typography>
@@ -204,6 +212,15 @@ function Login(prop) {
           </Paper>
         </Container>
       </div>
+      <Sebagai
+        {...dialogDaftar}
+        handleClose={() => {
+          setDialogDaftar((dialogDaftar) => ({
+            ...dialogDaftar,
+            open: false,
+          }));
+        }}
+      />
     </div>
   );
 }

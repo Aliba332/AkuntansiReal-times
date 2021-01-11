@@ -16,24 +16,24 @@ export default function DataProvider(props) {
   const { user } = useFirebase();
 
   const contactsCol = firestore.collection("profiles");
-  const chatsCol = firestore.collection("chats");
+  const transaksiCol = firestore.collection("transaksi");
 
   const [contacts, loadingContacts] = useCollectionData(contactsCol, {
-    idField: "id"
+    idField: "id",
   });
 
-  const [chats, loadingChats] = useCollectionData(
-    chatsCol
+  const [transaksi, loadingTransaksi] = useCollectionData(
+    transaksiCol
       .where("user_ids", "array-contains", user.uid)
       .orderBy("updated_at", "desc"),
     {
-      idField: "id"
+      idField: "id",
     }
   );
-
+  
   const profile = contacts && contacts.find((item) => item.id === user.uid);
 
-  if (loadingContacts || loadingChats) {
+  if (loadingContacts || loadingTransaksi) {
     return <AppLoading />;
   }
 
@@ -41,8 +41,8 @@ export default function DataProvider(props) {
     <DataContext.Provider
       value={{
         contacts,
-        chats,
-        profile
+        transaksi,
+        profile,
       }}
     >
       {props.children}

@@ -11,8 +11,8 @@ function NotFound() {
   return (
     <Container maxWidth="xs">
       <Paper className={classes.paper}>
-        <Typography variant="subtiitle2"> Halaman Tidak Ditemukan </Typography>
-        <Typography variant="h3" color="warning">
+        <Typography variant="subtitle2"> Halaman Tidak Ditemukan </Typography>
+        <Typography variant="h3" color="error">
           404
         </Typography>
         <Typography component={Link} to="/">

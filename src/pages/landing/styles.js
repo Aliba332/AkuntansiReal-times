@@ -25,8 +25,8 @@ const useStyles = makeStyles((theme) => ({
       position: "absolute",
       top: 0,
       left: 0,
-      zIndex: 1
-    }
+      zIndex: 1,
+    },
   },
   landingBox: {
     position: "relative",
@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
     zIndex: 2,
     display: "flex",
     alignItems: "center",
-    flexFlow: "column nowrap"
+    flexFlow: "column nowrap",
   },
   logoBox: {
     width: 282,
@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
     top: 0,
     left: 0,
     bottom: 0,
-    right: 0
+    right: 0,
   },
   btnBox: {
     width: 240,
@@ -56,22 +56,37 @@ const useStyles = makeStyles((theme) => ({
     bottom: 20,
     margin: "auto",
     display: "flex",
-    flexFlow: "column nowrap"
+    flexFlow: "column nowrap",
   },
 
   btnDaftar: {
     color: theme.palette.primary.main,
     backgroundColor: "#fff",
-    marginBottom: 20
+    marginBottom: 20,
   },
   btnLogin: {
     background: "transparent",
     color: "#fff",
-    border: "solid 1px #fff"
+    border: "solid 1px #fff",
   },
   buttons: {
-    marginTop: theme.spacing(6)
-  }
+    marginTop: theme.spacing(6),
+  },
+  dialog: {
+    display: "flex",
+    flexFlow: "column wrap",
+  },
+  daftar: {
+    display: "flex",
+    flexFLow: "row wrap",
+    justifyContent: "space-between",
+    marginTop: theme.spacing(3)
+  },
+  batal: {
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: theme.spacing(5)
+  },
 }));
 
 export default useStyles;

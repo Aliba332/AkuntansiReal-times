@@ -1,11 +1,12 @@
 const firebaseConfig={
-  apiKey: "AIzaSyCt_oCzdrnBxGfFW8JzEJpvrsW8fxannXM",
-  authDomain: "chat-app-react-71bf7.firebaseapp.com",
-  databaseURL: "https://chat-app-react-71bf7.firebaseio.com",
-  projectId: "chat-app-react-71bf7",
-  storageBucket: "chat-app-react-71bf7.appspot.com",
-  messagingSenderId: "75726158969",
-  appId: "1:75726158969:web:a413f0c070bd44a1da68a8"
+  apiKey: "AIzaSyDoiMDFpxGZutd25W2KZ27jFTMO-tt_Ju4",
+  authDomain: "akuntansi-realtime.firebaseapp.com",
+  databaseURL: "https://akuntansi-realtime.firebaseio.com",
+  projectId: "akuntansi-realtime",
+  storageBucket: "akuntansi-realtime.appspot.com",
+  messagingSenderId: "912904413694",
+  appId: "1:912904413694:web:1d65b3f944f427669ce0af",
+  measurementId: "G-X40G9F2VP9"
 };
 
 export default firebaseConfig;

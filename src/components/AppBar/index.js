@@ -30,12 +30,12 @@ function AppHeader({ toolbarContent, message }) {
   const classes = useStyles();
 
   return (
-    <AppBar position="static">
+    <AppBar position="relative">
       <Toolbar className={classes.toolbar}>
         {toolbarContent ? (
           toolbarContent
         ) : (
-          <Typography variant="h6">Chat App</Typography>
+          <Typography variant="h6">Akuntansi Real-time</Typography>
         )}
         <IconButton
           aria-controls="simple-menu"

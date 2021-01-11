@@ -42,7 +42,7 @@ export default function AddDialog({ open, handleClose }) {
     });
 
     if (findChat) {
-      return history.push(`/chat/${findChat.id}`);
+      return history.push(`/viewroom/${findChat.id}`);
     }
 
     const profile = contacts.find((item) => item.id === user.uid);
@@ -59,15 +59,15 @@ export default function AddDialog({ open, handleClose }) {
       },
       created_at: FieldValue.serverTimestamp(),
       updated_at: FieldValue.serverTimestamp()
-    };
+      };
 
-    try {
+      try {
       const newChatRef = await firestore.collection("chats").add(newChatData);
 
       history.push(`/chat/${newChatRef.id}`);
-    } catch (e) {
+      } catch (e) {
       console.log(e.message);
-    }
+      }
   };
 
   const filteredContacts = contacts.filter((contact) => {
@@ -109,6 +109,7 @@ export default function AddDialog({ open, handleClose }) {
           </div>
         </Toolbar>
       </AppBar>
+      
       <List>
         {filteredContacts.map((contact) => {
           if (contact.id === user.uid) {

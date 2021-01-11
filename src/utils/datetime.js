@@ -40,9 +40,9 @@ export const isoToRelative = (iso) => {
     const date = parseISO(iso);
 
     if (isToday(date)) {
-      return "Today";
+      return "Hari Ini";
     } else if (isYesterday(date)) {
-      return "Yesterday";
+      return "Kemarin";
     } else {
       return format(date, "MMMM dd, yyyy");
     }
@@ -63,7 +63,7 @@ export const secondsToTime = (secs) => {
   let obj = {
     h: hours,
     m: minutes,
-    s: seconds
+    s: seconds,
   };
   return obj;
 };
